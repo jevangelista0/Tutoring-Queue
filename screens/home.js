@@ -47,7 +47,7 @@ export default function HomeScreen() {
               })
             })
 
-          if(!isStudent)
+          if (!isStudent && numTutors >= 1)
             firebase.database().ref('numTutors').set(numTutors - 1)
 
           firebase.auth().signOut()
@@ -163,6 +163,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const queueRef = firebase.database().ref('queue')
     const tutorCounterRef = firebase.database().ref('numTutors')
+    const connectedRef = firebase.database().ref(".info/connected")
 
     AsyncStorage.getItem('uid').then(uid => {
       firebase.database().ref(`users/${uid}`).once('value', snap => {
@@ -172,19 +173,38 @@ export default function HomeScreen() {
           setIsStudent(data.isStudent)
           setEmail(firebase.auth().currentUser.email)
           setUid(uid)
+          
+          let tutorCount = 0
+
+          tutorCounterRef.on('value', snapshot => {
+            tutorCount = snapshot.val()
+            setNumTutors(snapshot.val())
+          }) // snapshot for tutorCounter
+
+          if (!data.isStudent) {
+            connectedRef.on("value", snapshot => { // snapshot for connectionRef
+              if (snapshot.val() === true) {
+                console.log('connected')
+                firebase.database().ref('numTutors').set(numTutors + 1)
+              } else if (tutorCount >= 1) {
+                console.log('disconnected')
+                firebase.database().ref('numTutors').onDisconnect().set(numTutors)
+              }
+            })
+          }
         }
       })
-
+      
       queueRef.on('value', snap => {
         const data = snap.val() && [...Object.values(snap.val())]
-
+        
         if (data) {
           setQueue(data)
-
+          
           setInQueue(data.find((item, i) => {
             if (item.uid === uid)
-              setPosition(i)
-
+            setPosition(i)
+            
             return item.uid === uid
           }))
         } else {
@@ -192,20 +212,6 @@ export default function HomeScreen() {
           setInQueue(false)
         }
       })
-    })
-
-    tutorCounterRef.on('value', snap => setNumTutors(snap.val()))
-
-    const connectedRef = firebase.database().ref(".info/connected")
-    
-    connectedRef.on("value", function (snap) {
-      if (snap.val() === true) {
-        console.log('connected')
-        firebase.database().ref('numTutors').set(numTutors + 1)
-      } else {
-        console.log('disconnected')
-        firebase.database().ref('numTutors').onDisconnect().set(numTutors)
-      }
     })
 
     return () => {
