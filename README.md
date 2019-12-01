@@ -1,5 +1,6 @@
 # cs370
-Semester project for CS 370. A math tutoring queue.
+Semester project for CS 370.
+A math tutoring queue.
 
 Requirements:
  - Nodejs
