@@ -185,10 +185,10 @@ export default function HomeScreen() {
             connectedRef.on("value", snapshot => { // snapshot for connectionRef
               if (snapshot.val() === true) {
                 console.log('connected')
-                firebase.database().ref('numTutors').set(numTutors + 1)
+                tutorCounterRef.set(numTutors + 1)
               } else if (tutorCount >= 1) {
                 console.log('disconnected')
-                firebase.database().ref('numTutors').onDisconnect().set(numTutors)
+                tutorCounterRef.onDisconnect().set(numTutors)
               }
             })
           }

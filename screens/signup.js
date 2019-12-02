@@ -80,7 +80,7 @@ export default function SignUp({ navigation }) {
       <TouchableOpacity
         style={styles.textBox}
         onPress={() => {
-          if (!email.includes('@qmail.cuny.edu'))
+          if (!email.includes('@qmail.cuny.edu') || !email.includes('@qc.cuny.edu'))
             setErrMsg('Please enter a valid Qmail')
           else if(pass !== confirmPass)
             setErrMsg('Passwords must match')
