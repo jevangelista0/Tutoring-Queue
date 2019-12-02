@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, View, Animated, AsyncStorage } from 'react-native'
 import firebase from 'firebase'
-import { firebaseInit } from '../env.json'
+import { firebaseConfig } from '../env.json'
 
 export default function Loading({ navigation }) {
   const opacity = new Animated.Value(0)
 
   useEffect(() => {
-    firebase.initializeApp(firebaseInit)
+    firebase.initializeApp(firebaseConfig)
 
     Animated.timing(
       opacity,
