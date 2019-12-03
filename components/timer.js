@@ -9,6 +9,7 @@ export default function Timer() {
 
   useEffect(() => {
     let interval = null
+    
     if (isActive) {
       interval = setInterval(() => {
         if (sec === 59) {
