@@ -3,6 +3,7 @@ import Constants from 'expo-constants'
 import firebase from 'firebase'
 import { Feather } from '@expo/vector-icons';
 import Card from '../components/card'
+import Timer from '../components/timer'
 import {
   StyleSheet,
   Text,
@@ -156,6 +157,8 @@ export default function HomeScreen() {
             />
           }
         />
+
+        <Timer />
       </View>
     )
   }
@@ -173,7 +176,7 @@ export default function HomeScreen() {
           setIsStudent(data.isStudent)
           setEmail(firebase.auth().currentUser.email)
           setUid(uid)
-          
+
           let tutorCount = 0
 
           tutorCounterRef.on('value', snapshot => {
@@ -194,17 +197,17 @@ export default function HomeScreen() {
           }
         }
       })
-      
+
       queueRef.on('value', snap => {
         const data = snap.val() && [...Object.values(snap.val())]
-        
+
         if (data) {
           setQueue(data)
-          
+
           setInQueue(data.find((item, i) => {
             if (item.uid === uid)
-            setPosition(i)
-            
+              setPosition(i)
+
             return item.uid === uid
           }))
         } else {
