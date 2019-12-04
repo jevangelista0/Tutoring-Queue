@@ -90,6 +90,12 @@ export default function SignUp({ navigation }) {
             handleSubmit(email, pass)
         }}
       ><Text style={{ textAlign: 'center' }}>Submit</Text></TouchableOpacity>
+
+      <Text style={{ marginTop: 14, textAlign: 'center', padding: 12 }}>
+        <Text style={{ textDecorationLine: 'underline', color: '#f55649' }}>Note</Text>
+
+        {'\n'}Emails can only be used for only student or professor, NOT both.
+      </Text>
     </KeyboardAvoidingView>
   )
 }
