@@ -40,7 +40,7 @@ export default function SignUp({ navigation }) {
       <Image source={require('../assets/images/qcLogo.png')} style={{ height: 100, width: 100, marginBottom: 20 }} />
 
       <View>
-        <Text style={{ textAlign: 'center', margin: 18, fontSize: 18 }}>Sign up with qmail</Text>
+        <Text style={{ textAlign: 'center', margin: 18, fontSize: 18 }}>Sign up with Qmail</Text>
       </View>
 
       <TextInput
@@ -82,7 +82,7 @@ export default function SignUp({ navigation }) {
         onPress={() => {
           if (!email.includes('@qmail.cuny.edu') || !email.includes('@qc.cuny.edu'))
             setErrMsg('Please enter a valid Qmail')
-          else if(pass !== confirmPass)
+          else if (pass !== confirmPass)
             setErrMsg('Passwords must match')
           else if (pass.length < 8)
             setErrMsg('Password must be at least 8 characters long')
@@ -91,11 +91,13 @@ export default function SignUp({ navigation }) {
         }}
       ><Text style={{ textAlign: 'center' }}>Submit</Text></TouchableOpacity>
 
-      <Text style={{ marginTop: 14, textAlign: 'center', padding: 12 }}>
-        <Text style={{ textDecorationLine: 'underline', color: '#f55649' }}>Note</Text>
+      <View>
+        <Text style={{ marginTop: 14, textAlign: 'center', padding: 12 }}>
+          <Text style={{ textDecorationLine: 'underline', color: '#f55649' }}>Note</Text>
 
-        {'\n'}Emails can only be used for only student or professor, NOT both.
+          {'\n'}Emails can only be used for only student or professor, NOT both.
       </Text>
+      </View>
     </KeyboardAvoidingView>
   )
 }
