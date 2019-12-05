@@ -2,17 +2,17 @@ import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { Feather } from '@expo/vector-icons'
 
-export default function Card({ data, handleClose, isFirst }) {
-  if (data)
+export default function Card({ data, handleClose, isFirst }) { // 3 params: student data, delete student function, is first in queue
+  if (data) // if data exists return something
     return (
       <View style={styles.container}>
         <Text style={{ fontSize: 16, /*color: '#fff'*/ }}>{data.email.substring(0, data.email.indexOf('@')) + ' · ' + data.class}</Text>
 
         {
-          isFirst &&
+          isFirst && // display only for first student
           <TouchableOpacity
             style={{ backgroundColor: 'skyblue', height: 20, width: 20, borderRadius: 10, justifyContent: 'center', alignItems: 'center' }}
-            onPress={() => handleClose()}
+            onPress={() => handleClose()} // handles deleted students
           >
             <Feather
               name='check'
@@ -24,6 +24,7 @@ export default function Card({ data, handleClose, isFirst }) {
       </View>
     )
 
+  // if it doesnt return empty View (div)
   return <View />
 }
 

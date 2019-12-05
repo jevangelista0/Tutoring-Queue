@@ -38,21 +38,21 @@ export default function HomeScreen() {
         name='log-out'
         size={20}
         style={{ padding: 4, color: 'red' }}
-        onPress={() => {
-          if (inQueue)
+        onPress={() => { // log out user
+          if (inQueue) // if the student is in queue..
             AsyncStorage.getItem('queueKey').then(key => {
-              firebase.database().ref(`/queue/${key}`).remove()
+              firebase.database().ref(`/queue/${key}`).remove() // ..remove student from queue..
 
-              AsyncStorage.removeItem('queueKey').then(() => { // clean up local key copy
+              AsyncStorage.removeItem('queueKey').then(() => { // ..and clean up local queue key copy
                 console.log('Cleared queuKey')
               })
             })
 
-          if (!isStudent && numTutors >= 1)
+          if (!isStudent && numTutors >= 1) // deduct online tutor
             firebase.database().ref('numTutors').set(numTutors - 1)
 
-          firebase.auth().signOut()
-          AsyncStorage.clear()
+          firebase.auth().signOut() // sign out user
+          AsyncStorage.clear() // clear local storage
         }}
       />
     </View>
@@ -86,23 +86,23 @@ export default function HomeScreen() {
             onPress={() => {
               if (inQueue) {
                 AsyncStorage.getItem('queueKey').then(key => {
-                  firebase.database().ref(`/queue/${key}`).remove()
+                  firebase.database().ref(`/queue/${key}`).remove() // remove self from queue
 
                   AsyncStorage.removeItem('queueKey').then(() => { // clean up local key copy
                     console.log('Cleared queuKey')
                   })
                 })
               } else {
-                const key = firebase.database().ref('queue').push().key
-                const item = {}
+                const key = firebase.database().ref('queue').push().key // create firebase push key
+                const item = {} // create temp variable
 
-                item[`/queue/${key}`] = {
+                item[`/queue/${key}`] = { // add student info to queue using created key
                   uid: localUid,
                   email: firebase.auth().currentUser.email,
                   class: 'Class not specified'
                 }
 
-                AsyncStorage.setItem('queueKey', key).then(() => {
+                AsyncStorage.setItem('queueKey', key).then(() => { // store queue key to be deleted
                   firebase.database().ref().update(item).catch(e => console.log(e.message))
                 })
               }
@@ -138,20 +138,22 @@ export default function HomeScreen() {
           data={queue}
           keyExtractor={item => item.uid}
           ListEmptyComponent={() =>
-            <Text style={{ textAlign: 'center', fontWeight: 'bold', marginVertical: 12 }}>No Students Have Questions Right Now.</Text>
+            <Text style={{ textAlign: 'center', fontWeight: 'bold', marginVertical: 12 }}>
+              No Students Have Questions Right Now.
+            </Text>
           }
           renderItem={({ item, index }) =>
-            <Card
+            <Card // create student card
               isFirst={index === 0}
-              data={item}
+              data={item} // pass student data
               handleClose={() =>
-                firebase.database().ref('queue').limitToFirst(1).once('value', snap => {
-                  const queueKey = Object.keys(snap.val())[0]
-                  const update = {}
+                firebase.database().ref('queue').limitToFirst(1).once('value', snap => { // get first student in queue
+                  const queueKey = Object.keys(snap.val())[0] // get key of object
+                  const update = {} // set temp variable
 
-                  update[`queue/${queueKey}`] = null
+                  update[`queue/${queueKey}`] = null // delete student data
 
-                  firebase.database().ref().update(update)
+                  firebase.database().ref().update(update) // update queue
                 })
               }
             />
@@ -168,30 +170,30 @@ export default function HomeScreen() {
     const tutorCounterRef = firebase.database().ref('numTutors')
     const connectedRef = firebase.database().ref(".info/connected")
 
-    AsyncStorage.getItem('uid').then(uid => {
-      firebase.database().ref(`users/${uid}`).once('value', snap => {
+    AsyncStorage.getItem('uid').then(uid => { // get local uid
+      firebase.database().ref(`users/${uid}`).once('value', snap => { // get user data
         const data = snap.val()
 
-        if (data) {
-          setIsStudent(data.isStudent)
-          setEmail(firebase.auth().currentUser.email)
-          setUid(uid)
+        if (data) { // id data exists
+          setIsStudent(data.isStudent) // set if isStudent status
+          setEmail(firebase.auth().currentUser.email) // store email to display
+          setUid(uid) // store uid for student queue (may not be needed b/c of queue id)
 
           let tutorCount = 0
 
           tutorCounterRef.on('value', snapshot => {
-            tutorCount = snapshot.val()
-            setNumTutors(snapshot.val())
+            tutorCount = snapshot.val() // save tutor count incase state is not updated
+            setNumTutors(snapshot.val()) // save tutor count to state
           }) // snapshot for tutorCounter
 
-          if (!data.isStudent) {
+          if (!data.isStudent) { // for tutors
             connectedRef.on("value", snapshot => { // snapshot for connectionRef
-              if (snapshot.val() === true) {
+              if (snapshot.val() === true) { // increase number of tutor
                 console.log('connected')
                 tutorCounterRef.set(numTutors + 1)
-              } else if (tutorCount >= 1) {
+              } else if (tutorCount >= 1) { // dunno (change to update())
                 console.log('disconnected')
-                tutorCounterRef.onDisconnect().set(numTutors)
+                tutorCounterRef.onDisconnect().set(numTutors) // update numTutors
               }
             })
           }
@@ -199,25 +201,25 @@ export default function HomeScreen() {
       })
 
       queueRef.on('value', snap => {
-        const data = snap.val() && [...Object.values(snap.val())]
+        const data = snap.val() && [...Object.values(snap.val())] // save queue as array
 
         if (data) {
-          setQueue(data)
+          setQueue(data) // set queue data
 
-          setInQueue(data.find((item, i) => {
+          setInQueue(data.find((item, i) => { // check if in queue or not
             if (item.uid === uid)
-              setPosition(i)
+              setPosition(i) // set position in queue
 
-            return item.uid === uid
+            return item.uid === uid // return if in queue or not
           }))
         } else {
-          setQueue([])
-          setInQueue(false)
+          setQueue([]) // if there's no queue reset
+          setInQueue(false) // set queue to false since no queue
         }
       })
     })
 
-    return () => {
+    return () => { // stop reference to queue, numTutors and connectionRef
       queueRef.off()
       tutorCounterRef.off()
       connectedRef.off()

@@ -5,6 +5,7 @@ import { BlurView } from 'expo-blur'
 export default function Welcome({ navigation }) {
   return (
     <View style={styles.container}>
+      {/* BlurView blurs the image */}
       <BlurView intensity={70} tint='light' style={{ ...StyleSheet.absoluteFill, zIndex: -4 }}>
         <Image source={require('../assets/images/qcCampus.jpg')} style={{ height: '100%', width: '100%', position: 'absolute', zIndex: -4 }} />
       </BlurView>
@@ -14,7 +15,7 @@ export default function Welcome({ navigation }) {
       <Text style={{ fontSize: 16, margin: 12 }}>to Math Lab Tutoring</Text>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('SignUp', { isStudent: true })}
+        onPress={() => navigation.navigate('SignUp', { isStudent: true })} // go to sign up page as a student
         style={{
           width: '100%',
           padding: 10,
@@ -26,7 +27,7 @@ export default function Welcome({ navigation }) {
       ><Text style={{ textAlign: 'center' }}>I'm a Student</Text></TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('SignUp', { isStudent: false })}
+        onPress={() => navigation.navigate('SignUp', { isStudent: false })} // go to sign up page as a non-student
         style={{
           width: '100%',
           padding: 10,
