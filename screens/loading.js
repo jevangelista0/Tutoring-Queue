@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, View, Animated, AsyncStorage } from 'react-native'
+import { StyleSheet, View, Animated } from 'react-native'
 import firebase from 'firebase'
 import { firebaseConfig } from '../env.json'
 
@@ -16,25 +16,9 @@ export default function Loading({ navigation }) {
         duration: 1500
       }
     ).start(() => {
-      firebase.auth().onAuthStateChanged(user => { // check account loggedin
-        if (user)
-          verify()
-        else
-          navigation.navigate('Login') // navigate to login 
-      })
+      firebase.auth().onAuthStateChanged(user => navigation.navigate(user ? 'App' : 'Auth')) // handle user
     })
   }, [])
-
-  const verify = () => {
-    AsyncStorage.getItem('uid').then(uid => {
-      if(uid === firebase.auth().currentUser.uid) // check if current user is logged in
-        navigation.navigate('Home', { uid })
-      else { // if not log them out and clear storage
-        firebase.auth().signOut()
-        AsyncStorage.clear()
-      }
-    })
-  }
 
   return (
     <View style={styles.container}>
