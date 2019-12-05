@@ -6,7 +6,7 @@ import Loading from '../screens/loading'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 
-const AppStack = createStackNavigator(
+const AppStack = createStackNavigator( // in app screen
   {
     Home: {
       screen: Home
@@ -17,7 +17,7 @@ const AppStack = createStackNavigator(
   }
 )
 
-const AuthStack = createStackNavigator(
+const AuthStack = createStackNavigator( // out of app screens
   {
     Login: {
       screen: Login
@@ -35,7 +35,7 @@ const AuthStack = createStackNavigator(
 )
 
 export default createAppContainer(
-  createSwitchNavigator(
+  createSwitchNavigator( // navigate between stacks
     {
       Loading,
       App: AppStack,

@@ -2,36 +2,36 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 
 export default function Timer() {
-  const [sec, setSec] = useState(0)
-  const [min, setMin] = useState(0)
-  const [hr, setHr] = useState(0)
-  const [isActive, setIsActive] = useState(false)
+  const [sec, setSec] = useState(0) // seconds variable
+  const [min, setMin] = useState(0) // minutes variable 
+  const [hr, setHr] = useState(0) // hours variable
+  const [isActive, setIsActive] = useState(false) // if timer is active or not
 
-  useEffect(() => {
-    let interval = null
+  useEffect(() => { // updates states when isActive changes or seconds keep changing
+    let interval = null // timer handler variable
     
-    if (isActive) {
-      interval = setInterval(() => {
-        if (sec === 59) {
+    if (isActive) { // if timer is started
+      interval = setInterval(() => { // set timer handler
+        if (sec === 59) { // reset to 0 for 60
           setSec(0)
 
-          if (min === 59) {
+          if (min === 59) { // reset to 0 for 60
             setMin(0)
 
-            if (hr === 59)
+            if (hr === 59) // reset to 0 for 60
               setHr(0)
             else
-              setHr(hr => hr + 1)
+              setHr(hr => hr + 1) // increment seconds
           } else
-            setMin(min => min + 1)
+            setMin(min => min + 1) // increment minutes
         } else
-          setSec(sec => sec + 1)
+          setSec(sec => sec + 1) // increment hours
       }, 1000)
-    } else if (!isActive && sec !== 0) {
+    } else if (!isActive && sec !== 0) { // else stop timer
       clearInterval(interval)
     }
 
-    return () => clearInterval(interval)
+    return () => clearInterval(interval) // clear timer (interval) for clean up
   }, [isActive, sec])
 
   return (
@@ -49,10 +49,10 @@ export default function Timer() {
         <TouchableOpacity
           style={{ borderRadius: 4, borderColor: 'skyblue', borderWidth: 1, padding: 8 }}
           onPress={() => {
-            setSec(0)
-            setMin(0)
-            setHr(0)
-            setIsActive(false)
+            setSec(0) // reset timer
+            setMin(0) // reset timer
+            setHr(0) // reset timer
+            setIsActive(false) // reset timer
           }}
         ><Text style={{ fontSize: 18 }}>Reset</Text></TouchableOpacity>
       </View>

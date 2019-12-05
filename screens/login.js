@@ -12,18 +12,18 @@ import {
 } from 'react-native'
 
 export default function Login({ navigation }) {
-  const [email, setEmail] = useState('')
-  const [pass, setPass] = useState('')
-  const [errMsg, setErrMsg] = useState()
-  const handleInput = (email, pass) => {
-    firebase.auth().signInWithEmailAndPassword(email, pass).then(({ user }) => {
+  const [email, setEmail] = useState('') // email variable
+  const [pass, setPass] = useState('') // pasword variable
+  const [errMsg, setErrMsg] = useState() // error message variable
+  const handleInput = (email, pass) => { // handle input to log in user
+    firebase.auth().signInWithEmailAndPassword(email, pass).then(({ user }) => { // use firebase to sign in
       if (user)
-        AsyncStorage.setItem('uid', user.uid).then(() => {
-          navigation.navigate('Home')
+        AsyncStorage.setItem('uid', user.uid).then(() => { // get the user id and store in device locally...
+          navigation.navigate('Home') // ...then navigate to home screen
         })
     }).catch(err => {
       if (err.message)
-        setErrMsg('Please check and try the email or password again')
+        setErrMsg('Please check and try the email or password again') // update error message for user
 
       console.log('Error:', err.message)
     })
@@ -43,7 +43,7 @@ export default function Login({ navigation }) {
         style={styles.textBox}
         placeholder='Qmail'
         value={email}
-        onChangeText={value => setEmail(value)}
+        onChangeText={value => setEmail(value)} // set email onChange
       />
 
       <TextInput
@@ -52,10 +52,10 @@ export default function Login({ navigation }) {
         secureTextEntry
         placeholder='Pass'
         value={pass}
-        onChangeText={value => setPass(value)}
+        onChangeText={value => setPass(value)} // set password onChange
       />
 
-      {
+      { // show error message to user
         errMsg && <View>
           <Text style={{ textAlign: 'center', color: 'red', paddingHorizontal: 20 }}>{errMsg}</Text>
         </View>
@@ -64,11 +64,11 @@ export default function Login({ navigation }) {
       <TouchableOpacity
         style={styles.textBox}
         onPress={() => {
-          if (!(email.includes('@') && email.includes('.')))
+          if (!(email.includes('@') && email.includes('.'))) // check if valid email
             setErrMsg('Please enter a valid email')
-          else if (pass.length < 8)
+          else if (pass.length < 8) // check if password has at least length 8
             setErrMsg('Password must be at least 8 characters long')
-          else
+          else // log in user if no errors
             handleInput(email, pass)
         }}
       ><Text style={{ textAlign: 'center' }}>Log In</Text></TouchableOpacity>
@@ -77,7 +77,7 @@ export default function Login({ navigation }) {
 
       <TouchableOpacity
         style={styles.textBox}
-        onPress={() => navigation.navigate('Welcome')}
+        onPress={() => navigation.navigate('Welcome')} // navigate to welcome screen to ask if student or professor
       ><Text style={{ textAlign: 'center' }}>Sign Up</Text></TouchableOpacity>
     </KeyboardAvoidingView>
   )

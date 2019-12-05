@@ -12,15 +12,15 @@ import {
 } from 'react-native'
 
 export default function SignUp({ navigation }) {
-  const [email, setEmail] = useState('')
-  const [pass, setPass] = useState('')
-  const [confirmPass, setConfirmPass] = useState('')
-  const [errMsg, setErrMsg] = useState()
-  const handleSubmit = (email, pass) => {
-    firebase.auth().createUserWithEmailAndPassword(email, pass).then(({ user }) => {
-      if (user)
-        AsyncStorage.setItem('uid', user.uid).then(() => {
-          firebase.database().ref(`users/${user.uid}`).set({
+  const [email, setEmail] = useState('') // email variable
+  const [pass, setPass] = useState('') // pasword variable
+  const [confirmPass, setConfirmPass] = useState('') // confirm password variable
+  const [errMsg, setErrMsg] = useState() // error message variable
+  const handleSubmit = (email, pass) => { // create a user
+    firebase.auth().createUserWithEmailAndPassword(email, pass).then(({ user }) => { 
+      if (user) // if user exists
+        AsyncStorage.setItem('uid', user.uid).then(() => { // store the uid of created user to auto log in
+          firebase.database().ref(`users/${user.uid}`).set({ // store the email and if student (from previous screen) or not
             email,
             isStudent: navigation.state.params.isStudent
           }).catch(err => {
@@ -28,7 +28,7 @@ export default function SignUp({ navigation }) {
           })
         })
     }).catch(err => {
-      if (err.message.includes('in use'))
+      if (err.message.includes('in use')) // let user know if email already used
         setErrMsg('Email already in exist')
 
       console.log('Error:', err.message)
@@ -59,7 +59,12 @@ export default function SignUp({ navigation }) {
         style={styles.textBox}
         placeholder='Pass'
         value={pass}
-        onChangeText={value => setPass(value)}
+        onChangeText={value => {
+          setPass(value)
+
+          if(value.length > 18) // to handle autfill inputs
+            setConfirmPass(value)
+        }}
       />
 
       <TextInput
@@ -80,13 +85,13 @@ export default function SignUp({ navigation }) {
       <TouchableOpacity
         style={styles.textBox}
         onPress={() => {
-          if (!email.includes('@qmail.cuny.edu') || !email.includes('@qc.cuny.edu'))
+          if (!email.includes('@qmail.cuny.edu') || !email.includes('@qc.cuny.edu')) // confirm email is qmail
             setErrMsg('Please enter a valid Qmail')
-          else if (pass !== confirmPass)
+          else if (pass !== confirmPass) // confirm if passwords are equal
             setErrMsg('Passwords must match')
-          else if (pass.length < 8)
+          else if (pass.length < 8) // confirm min length for password
             setErrMsg('Password must be at least 8 characters long')
-          else
+          else // submit and process if reuiqrements filled
             handleSubmit(email, pass)
         }}
       ><Text style={{ textAlign: 'center' }}>Submit</Text></TouchableOpacity>
