@@ -7,8 +7,7 @@ import {
   View,
   KeyboardAvoidingView,
   Image,
-  TouchableOpacity,
-  AsyncStorage
+  TouchableOpacity
 } from 'react-native'
 
 export default function SignUp({ navigation }) {
@@ -17,15 +16,13 @@ export default function SignUp({ navigation }) {
   const [confirmPass, setConfirmPass] = useState('') // confirm password variable
   const [errMsg, setErrMsg] = useState() // error message variable
   const handleSubmit = (email, pass) => { // create a user
-    firebase.auth().createUserWithEmailAndPassword(email, pass).then(({ user }) => { 
-      if (user) // if user exists
-        AsyncStorage.setItem('uid', user.uid).then(() => { // store the uid of created user to auto log in
-          firebase.database().ref(`users/${user.uid}`).set({ // store the email and if student (from previous screen) or not
-            email,
-            isStudent: navigation.state.params.isStudent
-          }).catch(err => {
-            console.log(err)
-          })
+    firebase.auth().createUserWithEmailAndPassword(email, pass).then(({ user }) => {
+      if (user)
+        firebase.database().ref(`users/${user.uid}`).set({ // store the email and if isStudent
+          email,
+          isStudent: navigation.state.params.isStudent
+        }).catch(err => {
+          console.log(err)
         })
     }).catch(err => {
       if (err.message.includes('in use')) // let user know if email already used
@@ -62,7 +59,7 @@ export default function SignUp({ navigation }) {
         onChangeText={value => {
           setPass(value)
 
-          if(value.length > 18) // to handle autfill inputs
+          if (value.length > 18) // to handle autfill inputs
             setConfirmPass(value)
         }}
       />

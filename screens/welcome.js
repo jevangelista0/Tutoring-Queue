@@ -1,11 +1,10 @@
 import React from 'react'
 import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native'
-import { BlurView } from 'expo-blur'
+import { BlurView } from 'expo-blur' // blurs image
 
 export default function Welcome({ navigation }) {
   return (
     <View style={styles.container}>
-      {/* BlurView blurs the image */}
       <BlurView intensity={70} tint='light' style={{ ...StyleSheet.absoluteFill, zIndex: -4 }}>
         <Image source={require('../assets/images/qcCampus.jpg')} style={{ height: '100%', width: '100%', position: 'absolute', zIndex: -4 }} />
       </BlurView>
@@ -27,7 +26,7 @@ export default function Welcome({ navigation }) {
       ><Text style={{ textAlign: 'center' }}>I'm a Student</Text></TouchableOpacity>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('SignUp', { isStudent: false })} // go to sign up page as a non-student
+        onPress={() => navigation.navigate('SignUp', { isStudent: false })} // go to sign up page as a tutor
         style={{
           width: '100%',
           padding: 10,
@@ -37,7 +36,7 @@ export default function Welcome({ navigation }) {
           fontSize: 16,
           borderRadius: 4
         }}
-      ><Text style={{ textAlign: 'center' }}>I'm a Professor</Text></TouchableOpacity>
+      ><Text style={{ textAlign: 'center' }}>I'm a Tutor</Text></TouchableOpacity>
     </View>
   )
 }

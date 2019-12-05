@@ -7,7 +7,6 @@ import {
   View,
   KeyboardAvoidingView,
   Image,
-  AsyncStorage,
   TouchableOpacity
 } from 'react-native'
 
@@ -16,12 +15,7 @@ export default function Login({ navigation }) {
   const [pass, setPass] = useState('') // pasword variable
   const [errMsg, setErrMsg] = useState() // error message variable
   const handleInput = (email, pass) => { // handle input to log in user
-    firebase.auth().signInWithEmailAndPassword(email, pass).then(({ user }) => { // use firebase to sign in
-      if (user)
-        AsyncStorage.setItem('uid', user.uid).then(() => { // get the user id and store in device locally...
-          navigation.navigate('Home') // ...then navigate to home screen
-        })
-    }).catch(err => {
+    firebase.auth().signInWithEmailAndPassword(email, pass).catch(err => {
       if (err.message)
         setErrMsg('Please check and try the email or password again') // update error message for user
 
