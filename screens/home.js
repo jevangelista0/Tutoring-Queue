@@ -104,7 +104,7 @@ export default function HomeScreen() {
                 }
 
                 AsyncStorage.setItem('queueKey', key).then(() => { // store queue key to be deleted
-                  firebase.database().ref().update(item).catch(e => console.log(e.message)) // then update queue.$key
+                  firebase.database().ref().update(item).catch(e => console.log(e.message)) // then update queue to include new data
                 })
               }
             }}
