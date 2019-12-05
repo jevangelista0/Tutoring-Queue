@@ -10,6 +10,7 @@ import Navigator from './navigation/Navigator'
  *  - remove AsyncStorage 🗸
  *  - validate email account
  *  - separate student input to own component
+ *  - fix timer 🗸
  */
 
 export default function App() {
