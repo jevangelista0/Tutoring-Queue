@@ -4,7 +4,7 @@ Semester project for CS 370.
 A tutoring queue.
 
 Requirements:
- - Nodejs
+ - Node.js
  - expo-cli
  - own firebase config 
 
