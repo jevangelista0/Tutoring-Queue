@@ -6,7 +6,7 @@ A tutoring queue.
 Requirements:
  - install Node.js (https://nodejs.org/en/)
  - run on terminal npm install expo-cli -g or yarn global add expo-cli
- - Expo app
+ - download Expo app onto phone
  - own firebase config 
 
 Set Up:
