@@ -86,7 +86,7 @@ export default function Login({ navigation }) {
             }).catch((e) => {
               console.log('Error: Password reset not sent')
 
-              setErrMsg('The account may not exist or is not a correct Qmail')
+              setErrMsg('The account may not exist or is not a valid Qmail')
             })
           }}
         >Forgot password?</Text>
