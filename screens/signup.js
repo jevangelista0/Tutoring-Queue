@@ -17,13 +17,20 @@ export default function SignUp({ navigation }) {
   const [errMsg, setErrMsg] = useState() // error message variable
   const handleSubmit = (email, pass) => { // create a user
     firebase.auth().createUserWithEmailAndPassword(email, pass).then(({ user }) => {
-      if (user)
+      if (user) {
+        user.sendEmailVerification().then(() => { // send email verification uppon sign up
+          console.log('Verification email sent')
+        }).catch(e => {
+          console.log(e)
+        })
+
         firebase.database().ref(`users/${user.uid}`).set({ // store the email and if isStudent
           email,
           isStudent: navigation.state.params.isStudent
         }).catch(err => {
           console.log(err)
         })
+      }
     }).catch(err => {
       if (err.message.includes('in use')) // let user know if email already used
         setErrMsg('Email already in exist')
