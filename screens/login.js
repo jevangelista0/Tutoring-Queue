@@ -74,10 +74,6 @@ export default function Login({ navigation }) {
             if (!email) {
               setErrMsg('Enter an email to reset password')
 
-              setTimeout(() => {
-                setErrMsg(undefined)
-              }, 4000)
-
               return
             }
 
