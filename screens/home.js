@@ -82,7 +82,18 @@ export default function HomeScreen() {
 
         <View style={{ alignItems: 'center' }}>
           <TouchableOpacity
-            style={{ backgroundColor: inQueue ? '#f55649' : 'skyblue', paddingVertical: 10, margin: 10, borderRadius: 30, paddingHorizontal: 30 }}
+            style={{ 
+              backgroundColor: inQueue ? '#f55649' : 'skyblue',
+              paddingVertical: 10,
+              margin: 10,
+              borderRadius: 30,
+              paddingHorizontal: 30,
+              elevation: 4,
+              shadowRadius: 2,
+              shadowOpacity: .4,
+              shadowColor: 'black',
+              shadowOffset: { height: 4, width: 0 }
+            }}
             onPress={() => {
               if (inQueue) {
                 AsyncStorage.getItem('queueKey').then(key => {
@@ -108,7 +119,11 @@ export default function HomeScreen() {
                 })
               }
             }}
-          ><Text style={{ color: '#fff', textAlign: 'center', fontSize: 24 }}>{inQueue ? 'Remove Me' : 'Add Me'}</Text></TouchableOpacity>
+          >
+            <Text style={{ color: '#fff', textAlign: 'center', fontSize: 24 }}>
+              {inQueue ? 'Remove Me' : 'Add Me'}
+            </Text>
+          </TouchableOpacity>
 
           <Text style={{ fontSize: 14, textAlign: 'center', padding: 10 }}>
             {

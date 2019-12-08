@@ -16,7 +16,9 @@ export default function Loading({ navigation }) {
         duration: 1500
       }
     ).start(() => {
-      firebase.auth().onAuthStateChanged(user => navigation.navigate(user ? 'App' : 'Auth')) // handle user
+      firebase.auth().onAuthStateChanged(user => 
+        navigation.navigate(user ? (user.emailVerified ? 'App' : 'Verify') : 'Auth')
+      ) // handle user
     })
   }, [])
 
