@@ -80,9 +80,7 @@ export default function Login({ navigation }) {
             firebase.auth().sendPasswordResetEmail(email).then(() => {
               setErrMsg('EMAIL SENT!')
 
-              setTimeout(() => {
-                setErrMsg(undefined)
-              }, 5000)
+              setTimeout(() => setErrMsg(undefined), 5000)
             }).catch(() => setErrMsg('The account may not exist or is not a valid Qmail'))
           }}
         >Forgot password?</Text>
