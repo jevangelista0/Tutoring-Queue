@@ -83,11 +83,7 @@ export default function Login({ navigation }) {
               setTimeout(() => {
                 setErrMsg(undefined)
               }, 5000)
-            }).catch((e) => {
-              console.log('Error: Password reset not sent')
-
-              setErrMsg('The account may not exist or is not a valid Qmail')
-            })
+            }).catch(() => setErrMsg('The account may not exist or is not a valid Qmail'))
           }}
         >Forgot password?</Text>
       </View>
