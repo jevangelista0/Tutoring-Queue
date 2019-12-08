@@ -22,7 +22,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jvincentdev.qcmath"
+    },
+    "android": {
+      "package": "com.jvincentdev.qcmath"
     }
   }
 }
