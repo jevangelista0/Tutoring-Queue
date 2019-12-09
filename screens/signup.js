@@ -33,7 +33,7 @@ export default function SignUp({ navigation }) {
       }
     }).catch(err => {
       if (err.message.includes('in use')) // let user know if email already used
-        setErrMsg('Email already in exist')
+        setErrMsg('Email already exists')
 
       console.log('Error:', err.message)
     })
