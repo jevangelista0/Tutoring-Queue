@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import firebase from 'firebase'
 import {
   StyleSheet,
@@ -10,11 +10,14 @@ import {
   TouchableOpacity
 } from 'react-native'
 
+let tutorCode
+
 export default function SignUp({ navigation }) {
   const [email, setEmail] = useState('') // email variable
   const [pass, setPass] = useState('') // pasword variable
   const [confirmPass, setConfirmPass] = useState('') // confirm password variable
   const [errMsg, setErrMsg] = useState() // error message variable
+  const [code, setCode] = useState('') // tutor passcode
   const handleSubmit = (email, pass) => { // create a user
     firebase.auth().createUserWithEmailAndPassword(email, pass).then(({ user }) => {
       if (user) {
@@ -38,6 +41,10 @@ export default function SignUp({ navigation }) {
       console.log('Error:', err.message)
     })
   }
+
+  useEffect(() => {
+    firebase.database().ref('code').once('value', snap => tutorCode = snap.val())
+  }, [])
 
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container} keyboardVerticalOffset={-100}>
@@ -86,6 +93,23 @@ export default function SignUp({ navigation }) {
         </View>
       }
 
+      {
+        !navigation.state.params.isStudent &&
+        <View style={{ alignItems: 'center' }}>
+          <Text style={{ textAlign: 'center', paddingTop: 8 }}>
+            Please input the provided tutor code
+          </Text>
+
+          <TextInput
+            textContentType='password'
+            placeholder='Tutor Passcode'
+            onChangeText={input => setCode(input)}
+            style={styles.textBox}
+            vaule={code}
+          />
+        </View>
+      }
+
       <TouchableOpacity
         style={styles.textBox}
         onPress={() => {
@@ -95,6 +119,8 @@ export default function SignUp({ navigation }) {
             setErrMsg('Passwords must match')
           else if (pass.length < 8) // confirm min length for password
             setErrMsg('Password must be at least 8 characters long')
+          else if (code !== tutorCode)
+            setErrMsg('Don\'t forget the passcode (:')
           else // submit and process if reuiqrements filled
             handleSubmit(email, pass)
         }}
