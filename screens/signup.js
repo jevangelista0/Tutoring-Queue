@@ -101,7 +101,7 @@ export default function SignUp({ navigation }) {
           </Text>
 
           <TextInput
-            textContentType='password'
+            secureTextEntry
             placeholder='Tutor Passcode'
             onChangeText={input => setCode(input)}
             style={styles.textBox}
