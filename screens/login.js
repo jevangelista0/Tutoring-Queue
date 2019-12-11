@@ -67,6 +67,25 @@ export default function Login({ navigation }) {
         }}
       ><Text style={{ textAlign: 'center' }}>Log In</Text></TouchableOpacity>
 
+      <View style={{ alignItems: 'flex-end', width: '100%' }}>
+        <Text
+          style={{ color: 'grey', textAlign: 'right', padding: 8 }}
+          onPress={() => {
+            if (!email) {
+              setErrMsg('Enter an email to reset password')
+
+              return
+            }
+
+            firebase.auth().sendPasswordResetEmail(email).then(() => {
+              setErrMsg('EMAIL SENT!')
+
+              setTimeout(() => setErrMsg(undefined), 5000)
+            }).catch(() => setErrMsg('The account may not exist or is not a valid Qmail'))
+          }}
+        >Forgot password?</Text>
+      </View>
+
       <View style={{ borderWidth: .5, borderColor: '#f55649', marginVertical: 12, width: '100%' }} />
 
       <TouchableOpacity
