@@ -28,7 +28,6 @@ export default function SignUp({ navigation }) {
         })
 
         firebase.database().ref(`users/${user.uid}`).set({ // store the email and if isStudent
-          email,
           isStudent: navigation.state.params.isStudent
         }).catch(err => {
           console.log(err)
