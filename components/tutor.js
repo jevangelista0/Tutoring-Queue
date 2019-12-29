@@ -3,9 +3,10 @@ import firebase from 'firebase'
 import Card from '../components/card'
 import Timer from '../components/timer'
 import Header from '../components/header'
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Animated } from 'react-native'
 
 export default function Tutor() {
+  const [opacity] = useState(new Animated.Value(0))
   const [email, setEmail] = useState('')
   const [queue, setQueue] = useState([])
   const [numTutors, setNumTutors] = useState(0)
@@ -45,6 +46,14 @@ export default function Tutor() {
         setQueue([]) // if there's no queue reset
     })
 
+    Animated.timing(
+      opacity,
+      {
+        toValue: 1,
+        duration: 250
+      }
+    ).start()
+
     return () => { // disconnect from queue, numTutors and connectionRef
       queueRef.off()
       tutorCounterRef.off()
@@ -53,7 +62,7 @@ export default function Tutor() {
   }, [])
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+    <Animated.View style={{ flex: 1, backgroundColor: '#fff', opacity }}>
       <Header
         email={email}
         handleLogOut={function () {
@@ -98,7 +107,7 @@ export default function Tutor() {
 
         <Timer />
       </View>
-    </View>
+    </Animated.View>
   )
 }
 
