@@ -1,17 +1,20 @@
 import React from 'react'
-import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Image, Platform, Text, View, TouchableOpacity } from 'react-native'
 import { BlurView } from 'expo-blur' // blurs image
 
 export default function Welcome({ navigation }) {
   return (
     <View style={styles.container}>
-      <BlurView intensity={70} tint='light' style={{ ...StyleSheet.absoluteFill, zIndex: -4 }}>
-        <Image source={require('../assets/images/qcCampus.jpg')} style={{ height: '100%', width: '100%', position: 'absolute', zIndex: -4 }} />
-      </BlurView>
+      <BlurView intensity={Platform.OS === 'ios' ? 70 : 98} tint='light' style={{ ...StyleSheet.absoluteFill, flex: 1, zIndex: -3 }} />
 
-      <Text style={{ fontSize: 20, margin: 12, fontWeight: 'bold' }}>Welcome!</Text>
+      <Image
+        source={require('../assets/images/qcCampus.jpg')}
+        style={{ ...StyleSheet.absoluteFill, flex: 1, height: '100%', position: 'absolute', zIndex: -4 }}
+      />
 
-      <Text style={{ fontSize: 16, margin: 12 }}>to Math Lab Tutoring</Text>
+      <Text style={{ fontSize: 24, margin: 12, fontWeight: 'bold' }}>Welcome!</Text>
+
+      <Text style={{ fontSize: 20, margin: 12 }}>to Math Lab Tutoring</Text>
 
       <TouchableOpacity
         onPress={() => navigation.navigate('SignUp', { isStudent: true })} // go to sign up page as a student
@@ -19,11 +22,11 @@ export default function Welcome({ navigation }) {
           width: '100%',
           padding: 10,
           margin: 10,
-          fontSize: 16,
+          fontSize: 20,
           borderRadius: 4,
           backgroundColor: '#f55649'
         }}
-      ><Text style={{ textAlign: 'center' }}>I'm a Student</Text></TouchableOpacity>
+      ><Text style={{ fontWeight: 'bold', textAlign: 'center' }}>I'm a Student</Text></TouchableOpacity>
 
       <TouchableOpacity
         onPress={() => navigation.navigate('SignUp', { isStudent: false })} // go to sign up page as a tutor
@@ -33,10 +36,10 @@ export default function Welcome({ navigation }) {
           borderColor: '#f55649',
           borderWidth: 1,
           margin: 10,
-          fontSize: 16,
+          fontSize: 20,
           borderRadius: 4
         }}
-      ><Text style={{ textAlign: 'center' }}>I'm a Tutor</Text></TouchableOpacity>
+      ><Text style={{ fontWeight: 'bold', textAlign: 'center' }}>I'm a Tutor</Text></TouchableOpacity>
     </View>
   )
 }
