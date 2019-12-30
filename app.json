@@ -23,10 +23,12 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.jvincentdev.qcmath"
+      "bundleIdentifier": "com.jvincentdev.qcmath",
+      "buildNumber": "1.1.0"
     },
     "android": {
-      "package": "com.jvincentdev.qcmath"
+      "package": "com.jvincentdev.qcmath",
+      "versionCode": 1.1
     }
   }
 }
