@@ -28,7 +28,7 @@
     },
     "android": {
       "package": "com.jvincentdev.qcmath",
-      "versionCode": 1.1
+      "versionCode": 2
     }
   }
 }
