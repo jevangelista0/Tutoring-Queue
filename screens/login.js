@@ -28,7 +28,7 @@ export default function Login({ navigation }) {
       <Image source={require('../assets/images/qcLogo.png')} style={{ height: 100, width: 100, marginBottom: 20 }} />
 
       <View>
-        <Text style={{ textAlign: 'center', margin: 18, fontSize: 18 }}>Log in with Qmail</Text>
+        <Text style={{ width: '100%', marginVertical: 18, fontSize: 18, fontWeight: 'bold' }}>Log In with Qmail</Text>
       </View>
 
       <TextInput

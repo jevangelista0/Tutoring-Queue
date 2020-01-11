@@ -50,7 +50,7 @@ export default function SignUp({ navigation }) {
       <Image source={require('../assets/images/qcLogo.png')} style={{ height: 100, width: 100, marginBottom: 20 }} />
 
       <View>
-        <Text style={{ textAlign: 'center', margin: 18, fontSize: 18 }}>Sign up with Qmail</Text>
+        <Text style={{ textAlign: 'center', fontWeight: 'bold', marginVertical: 18, fontSize: 18 }}>Create Account</Text>
       </View>
 
       <TextInput
