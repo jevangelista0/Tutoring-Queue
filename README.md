@@ -1,4 +1,4 @@
-# cs370
+# Tutoring Queue (qcmath)
 Semester project for CS 370.
 
 A tutoring queue.
