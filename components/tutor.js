@@ -128,7 +128,8 @@ export default function Tutor() {
           currStudent.email ?
             <Text style={{ fontWeight: 'bold' }}>
               Now tutoring {
-              currStudent.email.substring(0, currStudent.email.indexOf('.')) + ' ' + currStudent.email.substring(currStudent.email.indexOf('.'), (currStudent.email.indexOf('.') + 2)).toUpperCase()
+              currStudent.email.substring(0, currStudent.email.indexOf('.')) + ' ' + 
+              currStudent.email.substring(currStudent.email.indexOf('.'), (currStudent.email.indexOf('.') + 2)).toUpperCase()
               }
             </Text>
             :

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 
 export default function Timer({ useActive, onStop, initTime }) {
-  // const [startTime, setStartTime] = useState() // save when timer started
   const [sec, setSec] = useState(0) // seconds variable
   const [min, setMin] = useState(0) // minutes variable 
   const [hr, setHr] = useState(0) // hours variable
