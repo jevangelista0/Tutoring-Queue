@@ -3,7 +3,7 @@ import firebase from 'firebase'
 import Card from '../components/card'
 import Timer from '../components/timer'
 import Header from '../components/header'
-import { StyleSheet, Text, View, FlatList, Animated, AsyncStorage, Alert, SnapshotViewIOSComponent } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Animated, AsyncStorage, Alert } from 'react-native'
 
 export default function Tutor() {
   const [opacity] = useState(new Animated.Value(0))
