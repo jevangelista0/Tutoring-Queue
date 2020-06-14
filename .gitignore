@@ -16,6 +16,7 @@ web-report/
 env.json
 
 yarn-error.log
+yarn.lock
 
 # macOS
 .DS_Store
